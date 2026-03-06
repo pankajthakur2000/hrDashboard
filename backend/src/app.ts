@@ -41,4 +41,9 @@ export function createApp() {
   return app;
 }
 
+// Vercel's Node runtime expects the default export of this module
+// to be a request handler function or a server-like object.
+// Export a singleton Express app instance as the default.
+const app = createApp();
+export default app;
 
