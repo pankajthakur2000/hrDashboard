@@ -19,7 +19,6 @@ export const Attendance = mongoose.models.Attendance ??
 let connectPromise = null;
 export async function connectMongo() {
     const uri = process.env.MONGODB_URI;
-    console.log("uri", uri);
     if (!uri)
         throw new Error("MONGODB_URI is required");
     // First, use the native MongoDB driver (your preferred code) to verify the connection.

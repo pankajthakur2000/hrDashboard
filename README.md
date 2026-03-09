@@ -134,6 +134,20 @@ Deploy from the `frontend/` folder.
 - **Environment variable**
   - `VITE_API_BASE_URL`: your deployed backend base URL, e.g. `https://your-api.onrender.com`
 
+### Full-stack on Vercel (single project)
+
+This repo supports deploying **frontend + backend** in one Vercel project:
+
+- **Build Command**: `npm run build`
+- **Output Directory**: `frontend/dist`
+- **API**: served by Vercel Functions at `/api/*`
+
+Environment variables (Vercel project settings):
+- **Recommended (persistent data)**: set `MONGODB_URI` to your MongoDB Atlas connection string.
+  - Ensure Atlas **Network Access** allows Vercel (often simplest for demos: allow `0.0.0.0/0`).
+- **Optional (demo / no persistence)**: set `USE_MEMORY_DB=true` to run without Mongo.
+- **Optional**: set `REQUIRE_MONGO=true` to fail deployments/requests if Mongo is not reachable.
+
 ---
 
 ## Assumptions / limitations
