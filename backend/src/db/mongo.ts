@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import { MongoClient, ServerApiVersion } from "mongodb";
 
 export type AttendanceStatus = "PRESENT" | "ABSENT";
 
@@ -51,11 +52,24 @@ export const Attendance =
 let connectPromise: Promise<typeof mongoose> | null = null;
 
 export async function connectMongo() {
-  const uri = process.env.MONGODB_URI;
+  const uri = process.env.MONGODB_URI as string;
   if (!uri) throw new Error("MONGODB_URI is required");
 
+  // First, use the native MongoDB driver (your preferred code) to verify the connection.
+  const client = new MongoClient(uri, {
+    serverApi: {
+      version: ServerApiVersion.v1,
+      strict: true,
+      deprecationErrors: true
+    }
+  });
+
+  await client.connect();
+  await client.db("admin").command({ ping: 1 });
+  await client.close();
+
+  // Then connect Mongoose so the rest of the app (models, queries) continues to work.
   if (!connectPromise) {
-    // Keep queries predictable; avoid silent coercions.
     mongoose.set("strictQuery", true);
     connectPromise = mongoose.connect(uri);
   }

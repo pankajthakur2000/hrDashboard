@@ -23,6 +23,14 @@ export function createApp() {
     app.use(helmet());
     app.use(express.json({ limit: "1mb" }));
     app.use(morgan("dev"));
+    // Helpful landing route so opening the backend URL in a browser doesn't look "broken".
+    app.get("/", (_req, res) => {
+        res.json({
+            ok: true,
+            service: "HRMS Lite API",
+            health: "/api/health"
+        });
+    });
     app.get("/api/health", (_req, res) => res.json({ ok: true }));
     app.use("/api/summary", summaryRouter);
     app.use("/api/employees", employeesRouter);
@@ -31,3 +39,8 @@ export function createApp() {
     app.use(errorHandler);
     return app;
 }
+// Vercel's Node runtime expects the default export of this module
+// to be a request handler function or a server-like object.
+// Export a singleton Express app instance as the default.
+const app = createApp();
+export default app;

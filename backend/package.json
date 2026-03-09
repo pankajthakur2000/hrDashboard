@@ -5,7 +5,9 @@
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "node --watch --loader ts-node/esm src/index.ts",
+    "dev": "npm run dev:memory",
+    "dev:memory": "USE_MEMORY_DB=true node --watch --loader ts-node/esm src/index.ts",
+    "dev:mongo": "node --watch --loader ts-node/esm src/index.ts",
     "build": "tsc -p tsconfig.json",
     "start": "node dist/index.js",
     "seed": "node --loader ts-node/esm src/seed.ts"

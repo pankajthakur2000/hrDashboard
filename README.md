@@ -74,6 +74,11 @@ npm run dev
 - Frontend: `http://localhost:5173`
 - Backend: `http://localhost:4000/api/health`
 
+Notes:
+- If you see `EADDRINUSE` for port 4000, another process is already using it. Stop that process or run `PORT=4001 npm run dev`.
+- Backend `npm run dev` defaults to an in-memory DB for local dev. To use Mongo, run `npm run dev:mongo`.
+- If the frontend shows Vite proxy errors like `ECONNREFUSED ::1:4000`, set `frontend/.env` to `VITE_API_PROXY_TARGET=http://127.0.0.1:4001` (or whatever port your backend uses).
+
 ---
 
 ## API (high level)

@@ -30,6 +30,14 @@ export function createApp() {
   app.use(express.json({ limit: "1mb" }));
   app.use(morgan("dev"));
 
+  // Helpful landing route so opening the backend URL in a browser doesn't look "broken".
+  app.get("/", (_req: Request, res: Response) => {
+    res.json({
+      ok: true,
+      service: "HRMS Lite API",
+      health: "/api/health"
+    });
+  });
   app.get("/api/health", (_req: Request, res: Response) => res.json({ ok: true }));
   app.use("/api/summary", summaryRouter);
   app.use("/api/employees", employeesRouter);
